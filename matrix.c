@@ -11,6 +11,11 @@ typedef struct matrix {
 
 // allocM はnrow行ncol列の行列を作成し、0埋めした状態で行列のポインタを返します
 MATRIX* allocM(int nrow, int ncol){
+    // 数値が小さすぎたり大きすぎたりすると危なそうなのでNULLを返しとく
+    if(nrow <= 0 || ncol <= 0 || nrow > 1000 || ncol > 1000){
+        puts("ERROR!! Abnormal numerical value");
+        return NULL;
+    }
     MATRIX* matrix;
     matrix = malloc(sizeof(MATRIX));
     matrix->nrow = nrow;
