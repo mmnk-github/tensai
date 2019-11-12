@@ -42,6 +42,24 @@ void freeM(MATRIX* m){
 
 // printM は行列を表示します
 void printM(MATRIX* m){
+    unsigned char flag = 0;
+    for(int i = 0; i < m->nrow; i ++){
+        for(int j = 0; j < m->ncol; j ++){
+            if(m->data[i][j] >= 1000.0){
+                flag = 1;
+            }
+        }
+    }
+    if(flag == 1){
+        puts("Since elements with more than 4 digits are included, displaying the matrix as it is may cause the display to collapse. Do you still want to display it? (Y/N)");
+        char c;
+        getchar();
+        scanf("%c", &c);
+        if(c != 'Y' && c != 'y'){
+            return ;
+        }
+    }
+
     printf("\n");
     for(int i = 0; i < m->nrow; i ++){
         for(int j = 0; j < m->ncol; j ++){
@@ -59,7 +77,7 @@ int main(void){
     printf("row = ");
     scanf("%d", &row);
     MATRIX* matrix = allocM(col, row);
-    matrix->data[0][0] = 123.5;
+    matrix->data[0][0] = 1234.5;
     printM(matrix);
     freeM(matrix);
     return 0;
