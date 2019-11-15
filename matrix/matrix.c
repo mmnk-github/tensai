@@ -11,6 +11,11 @@ typedef struct matrix {
 
 // allocM はnrow行ncol列の行列を作成し、0埋めした状態で行列のポインタを返します
 MATRIX* allocM(int nrow, int ncol){
+    // 数値が小さすぎたり大きすぎたりすると危なそうなのでNULLを返しとく
+    if(nrow <= 0 || ncol <= 0 || nrow > 1000 || ncol > 1000){
+        puts("ERROR!! Abnormal numerical value");
+        return NULL;
+    }
     MATRIX* matrix;
     matrix = malloc(sizeof(MATRIX));
     matrix->nrow = nrow;
@@ -37,6 +42,24 @@ void freeM(MATRIX* m){
 
 // printM は行列を表示します
 void printM(MATRIX* m){
+    unsigned char flag = 0;
+    for(int i = 0; i < m->nrow; i ++){
+        for(int j = 0; j < m->ncol; j ++){
+            if(m->data[i][j] >= 1000.0){
+                flag = 1;
+            }
+        }
+    }
+    if(flag == 1){
+        puts("Since elements with more than 4 digits are included, displaying the matrix as it is may cause the display to collapse. Do you still want to display it? (Y/N)");
+        char c;
+        getchar();
+        scanf("%c", &c);
+        if(c != 'Y' && c != 'y'){
+            return ;
+        }
+    }
+
     printf("\n");
     for(int i = 0; i < m->nrow; i ++){
         for(int j = 0; j < m->ncol; j ++){
@@ -54,7 +77,7 @@ int main(void){
     printf("row = ");
     scanf("%d", &row);
     MATRIX* matrix = allocM(col, row);
-    matrix->data[0][0] = 123.5;
+    matrix->data[0][0] = 1234.5;
     printM(matrix);
     freeM(matrix);
     return 0;
