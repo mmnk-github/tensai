@@ -111,8 +111,18 @@ MATRIX* mulM(MATRIX* n, MATRIX* m){
 int main(void){
     srand((unsigned)time(NULL)); // rand() de ransu deru
     int row = 4, col = 5;
-    MATRIX *matrix = allocM(row, col);
-    printf("%d\n", rand() % 100);
-    freeM(matrix);
+    MATRIX *m1 = allocM(row, col);
+    MATRIX *m2 = allocM(row, col);
+    for(int i = 0; i < row; i ++){
+        for(int j = 0; j < col; j ++){
+            m1->data[i][j] = rand() % 10;
+            m2->data[i][j] = rand() % 10;
+        }
+    }
+    printM(m1);
+    printM(m2);
+    printM(subM(m1, m2));
+    freeM(m1);
+    freeM(m2);
     return 0;
 }
