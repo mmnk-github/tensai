@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 #include <stdlib.h>
 
 typedef struct matrix {
@@ -72,12 +73,34 @@ void printM(MATRIX* m){
 
 // addM は行列の和を返します
 MATRIX* addM(MATRIX* n, MATRIX* m){
-
+    if(n->ncol != m->ncol || n->nrow != m->nrow){
+        printf("size error!\n");
+        return NULL;
+    }else{
+        MATRIX *res = allocM(n->nrow, n->ncol);
+        for(int i = 0; i < n->nrow; i ++){
+            for(int j = 0; j < n->ncol; j ++){
+                res->data[i][j] = n->data[i][j] + m->data[i][j];
+            }
+        }
+        return res;
+    }
 }
 
 // subM は行列の差を返します
 MATRIX* subM(MATRIX* n, MATRIX* m){
-
+    if(n->ncol != m->ncol || n->nrow != m->nrow){
+        printf("size error!\n");
+        return NULL;
+    }else{
+        MATRIX *res = allocM(n->nrow, n->ncol);
+        for(int i = 0; i < n->nrow; i ++){
+            for(int j = 0; j < n->ncol; j ++){
+                res->data[i][j] = n->data[i][j] - m->data[i][j];
+            }
+        }
+        return res;
+    }
 }
 
 // mulM は行列の積を返します
@@ -86,14 +109,10 @@ MATRIX* mulM(MATRIX* n, MATRIX* m){
 }
 
 int main(void){
-    int col, row;
-    printf("Will make a matrix.\ncol = ");
-    scanf("%d", &col);
-    printf("row = ");
-    scanf("%d", &row);
-    MATRIX* matrix = allocM(col, row);
-    matrix->data[0][0] = 1234.5;
-    printM(matrix);
+    srand((unsigned)time(NULL)); // rand() de ransu deru
+    int row = 4, col = 5;
+    MATRIX *matrix = allocM(row, col);
+    printf("%d\n", rand() % 100);
     freeM(matrix);
     return 0;
 }
