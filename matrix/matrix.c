@@ -70,6 +70,21 @@ void printM(MATRIX* m){
     printf("\n");
 }
 
+// addM は行列の和を返します
+MATRIX* addM(MATRIX* n, MATRIX* m){
+
+}
+
+// subM は行列の差を返します
+MATRIX* subM(MATRIX* n, MATRIX* m){
+
+}
+
+// mulM は行列の積を返します
+MATRIX* mulM(MATRIX* n, MATRIX* m){
+
+}
+
 int main(void){
     int col, row;
     printf("Will make a matrix.\ncol = ");
