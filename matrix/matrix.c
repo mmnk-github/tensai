@@ -33,6 +33,7 @@ MATRIX* allocM(int nrow, int ncol){
 
 // freeM は行列のメモリを解放します
 void freeM(MATRIX* m){
+    if(m == NULL) return ;
     for(int i = 0; i < m->nrow; i ++){
         free(m->data[i]);
     }
@@ -74,6 +75,8 @@ void printM(MATRIX* m){
 
 // addM は行列の和を返します
 MATRIX* addM(MATRIX* n, MATRIX* m){
+    if(n == NULL) return NULL;
+    if(m == NULL) return NULL;
     if(n->ncol != m->ncol || n->nrow != m->nrow){
         printf("size error!\n");
         return NULL;
@@ -90,6 +93,8 @@ MATRIX* addM(MATRIX* n, MATRIX* m){
 
 // subM は行列の差を返します
 MATRIX* subM(MATRIX* n, MATRIX* m){
+    if(n == NULL) return NULL;
+    if(m == NULL) return NULL;
     if(n->ncol != m->ncol || n->nrow != m->nrow){
         printf("size error!\n");
         return NULL;
@@ -106,6 +111,8 @@ MATRIX* subM(MATRIX* n, MATRIX* m){
 
 // mulM は行列の積を返します
 MATRIX* mulM(MATRIX* n, MATRIX* m){
+    if(n == NULL) return NULL;
+    if(m == NULL) return NULL;
     if(n->ncol != m->nrow){
         printf("size error!\n");
         return NULL;
@@ -120,6 +127,18 @@ MATRIX* mulM(MATRIX* n, MATRIX* m){
         }
         return res;
     }
+}
+
+// transM は行列を転置します
+MATRIX* transM(MATRIX *m){
+    if(m == NULL) return NULL;
+    MATRIX *res = allocM(m->ncol, m->nrow);
+    for(int i = 0; i < m->nrow; i ++){
+        for(int j = 0; j < m->ncol; j ++){
+            res->data[j][i] = m->data[i][j];
+        }
+    }
+    return res;
 }
 
 int main(void){
@@ -138,8 +157,8 @@ int main(void){
         }
     }
     printM(m1);
-    printM(m2);
-    printM(mulM(m1, m2));
+    // printM(m2);
+    printM(transM(m1));
     freeM(m1);
     freeM(m2);
     return 0;
