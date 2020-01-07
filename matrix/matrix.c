@@ -43,6 +43,7 @@ void freeM(MATRIX* m){
 
 // printM は行列を表示します
 void printM(MATRIX* m){
+    if(m == NULL) return ;
     unsigned char flag = 0;
     for(int i = 0; i < m->nrow; i ++){
         for(int j = 0; j < m->ncol; j ++){
@@ -105,23 +106,40 @@ MATRIX* subM(MATRIX* n, MATRIX* m){
 
 // mulM は行列の積を返します
 MATRIX* mulM(MATRIX* n, MATRIX* m){
-
+    if(n->ncol != m->nrow){
+        printf("size error!\n");
+        return NULL;
+    }else{
+        MATRIX *res = allocM(n->nrow, m->ncol);
+        for(int i = 0; i < n->ncol; i ++){
+            for(int j = 0; j < n->nrow; j ++){
+                for(int k = 0; k < m->ncol; k ++){
+                    res->data[j][k] += n->data[j][i] * m->data[i][k];
+                }
+            }
+        }
+        return res;
+    }
 }
 
 int main(void){
     srand((unsigned)time(NULL)); // rand() de ransu deru
-    int row = 4, col = 5;
-    MATRIX *m1 = allocM(row, col);
-    MATRIX *m2 = allocM(row, col);
-    for(int i = 0; i < row; i ++){
-        for(int j = 0; j < col; j ++){
-            m1->data[i][j] = rand() % 10;
-            m2->data[i][j] = rand() % 10;
+    int a = 2, b = 3, c = 3;
+    MATRIX *m1 = allocM(a, b);
+    MATRIX *m2 = allocM(b, c);
+    for(int i = 0; i < a; i ++){
+        for(int j = 0; j < b; j ++){
+            m1->data[i][j] = rand() % 6;
+        }
+    }
+    for(int i = 0; i < b; i ++){
+        for(int j = 0; j < c; j ++){
+            m2->data[i][j] = rand() % 6;
         }
     }
     printM(m1);
     printM(m2);
-    printM(subM(m1, m2));
+    printM(mulM(m1, m2));
     freeM(m1);
     freeM(m2);
     return 0;
