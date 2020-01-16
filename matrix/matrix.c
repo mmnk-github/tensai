@@ -141,6 +141,8 @@ MATRIX* transM(MATRIX *m){
     return res;
 }
 
+// a
+
 int main(void){
     srand((unsigned)time(NULL)); // rand() de ransu deru
     int a = 2, b = 3, c = 3;
